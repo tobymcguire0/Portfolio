@@ -4,7 +4,7 @@ pitch: A puzzle game about choosing the correct frequency.
 genre: Puzzle
 platform: Web (Play in browser)
 itchUrl: https://toblet.itch.io/transmission
-image: /public/images/games/Transmission/transmission-main.png
+image: /images/games/Transmission/transmission-main.png
 tags: [Puzzle, Browser]
 featured: true
 order: 2

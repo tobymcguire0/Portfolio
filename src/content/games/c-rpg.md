@@ -4,7 +4,7 @@ pitch: A console-based RPG exploring game mechanics and systems design.
 genre: RPG
 platform: Desktop
 github: https://github.com/tobymcguire0/C-RPG
-image: /public/images/games/C-RPG/crpg-main.png
+image: /images/games/C-RPG/crpg-main.png
 tags: [RPG, C#, Console]
 featured: false
 order: 6
