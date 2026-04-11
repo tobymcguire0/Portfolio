@@ -1,0 +1,79 @@
+---
+import { siteConfig } from '../../data/site';
+---
+
+<header
+  class="sticky top-0 z-50 bg-surface-50/80 backdrop-blur-md border-b border-surface-200"
+>
+  <nav
+    class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+    aria-label="Main navigation"
+  >
+    <a
+      href="/"
+      class="text-lg font-bold text-surface-900 hover:text-primary-600 transition-colors"
+    >
+      {siteConfig.name}
+    </a>
+
+    <button
+      id="mobile-menu-btn"
+      class="sm:hidden p-2 text-surface-600 hover:text-surface-900"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <ul class="hidden sm:flex items-center gap-1">
+      {
+        siteConfig.nav.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="px-3 py-2 text-sm font-medium text-surface-600 hover:text-primary-600 rounded-md hover:bg-surface-100 transition-colors"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <div
+    id="mobile-menu"
+    class="hidden sm:hidden border-t border-surface-200 bg-surface-50"
+  >
+    <ul class="px-4 py-3 space-y-1">
+      {
+        siteConfig.nav.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="block px-3 py-2 text-sm font-medium text-surface-600 hover:text-primary-600 rounded-md hover:bg-surface-100 transition-colors"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    menu?.classList.toggle('hidden');
+  });
+</script>

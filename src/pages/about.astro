@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../data/site';
+---
+
+<BaseLayout
+  title="About"
+  description="About Toby McGuire — software developer, game developer, and builder of things."
+>
+  <section class="py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold text-surface-900">About Me</h1>
+
+      <div class="mt-8 space-y-6 text-surface-600 leading-relaxed">
+        <p class="text-lg">
+          I'm Toby McGuire, a developer who builds both software and games. I
+          like working across the full stack of a problem -- whether that means
+          designing database schemas for a web app or wiring up multiplayer
+          networking for a fighting game.
+        </p>
+
+        <p>
+          On the software side, I work with TypeScript, React, and Node.js,
+          building applications that are practical and well-structured. I'm
+          currently focused on growing my full-stack skills through projects like
+          Cookbook, a recipe organization app that touches everything from
+          frontend UI to backend architecture.
+        </p>
+
+        <p>
+          On the game dev side, I build with C# and Unity. My biggest project
+          right now is Sumo, a multiplayer fighting game that started as a small
+          prototype and grew into something heading for Steam. Working on it has
+          taught me a lot about real-time networking, game polish, and shipping
+          something that feels complete.
+        </p>
+
+        <p>
+          I've also published several games on itch.io -- puzzle games,
+          platformers, survival games -- each one a chance to explore a different
+          corner of game design and development.
+        </p>
+
+        <p>
+          I care about clean code, clear architecture, and building things that
+          work well. I'm always learning, always building, and always looking for
+          the next interesting problem to solve.
+        </p>
+      </div>
+
+      <div class="mt-12 flex flex-wrap gap-4">
+        <a
+          href={siteConfig.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center px-5 py-2.5 rounded-lg border border-surface-300 text-surface-700 font-medium hover:bg-surface-100 transition-colors text-sm"
+        >
+          GitHub
+        </a>
+        <a
+          href={siteConfig.itch}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center px-5 py-2.5 rounded-lg border border-surface-300 text-surface-700 font-medium hover:bg-surface-100 transition-colors text-sm"
+        >
+          itch.io
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center px-5 py-2.5 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700 transition-colors text-sm"
+        >
+          Get in Touch
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

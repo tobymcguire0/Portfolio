@@ -1,0 +1,41 @@
+---
+import { siteConfig } from '../../data/site';
+---
+
+<footer class="bg-surface-900 text-surface-300 mt-auto">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div
+      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6"
+    >
+      <div>
+        <p class="text-surface-100 font-semibold">{siteConfig.name}</p>
+        <p class="text-sm mt-1">Software Developer & Game Developer</p>
+      </div>
+      <div class="flex items-center gap-4">
+        {
+          siteConfig.social.map((link) => (
+            <a
+              href={link.href}
+              target={link.href.startsWith('mailto') ? undefined : '_blank'}
+              rel={
+                link.href.startsWith('mailto')
+                  ? undefined
+                  : 'noopener noreferrer'
+              }
+              class="text-surface-400 hover:text-surface-100 transition-colors text-sm"
+              aria-label={link.label}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+    <div class="mt-8 pt-6 border-t border-surface-700 text-sm text-surface-500">
+      <p>
+        &copy; {new Date().getFullYear()}
+        {siteConfig.name}. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>

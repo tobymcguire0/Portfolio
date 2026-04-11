@@ -1,0 +1,18 @@
+---
+interface Props {
+  heading: string;
+  subheading?: string;
+  align?: 'left' | 'center';
+  dark?: boolean;
+}
+
+const { heading, subheading, align = 'left', dark = false } = Astro.props;
+const alignClass = align === 'center' ? 'text-center' : '';
+const headingColor = dark ? 'text-white' : 'text-surface-900';
+const subColor = dark ? 'text-surface-400' : 'text-surface-500';
+---
+
+<div class={`mb-10 ${alignClass}`}>
+  <h2 class={`text-3xl font-bold ${headingColor}`}>{heading}</h2>
+  {subheading && <p class={`mt-2 text-lg ${subColor}`}>{subheading}</p>}
+</div>

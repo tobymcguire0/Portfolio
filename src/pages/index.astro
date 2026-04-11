@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/shared/SectionHeading.astro';
+import ProjectCard from '../components/shared/ProjectCard.astro';
+import GameCard from '../components/shared/GameCard.astro';
+import { homeContent } from '../data/home';
+import { siteConfig } from '../data/site';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const allGames = await getCollection('games');
+const featuredGames = allGames
+  .filter((g) => g.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const { hero, sections } = homeContent;
+---
+
+<BaseLayout title={siteConfig.title} description={siteConfig.description}>
+  <section class="bg-surface-900 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
+      <p class="text-primary-400 font-medium text-sm tracking-wide uppercase">
+        {hero.greeting}
+      </p>
+      <h1
+        class="mt-3 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight"
+      >
+        {hero.tagline}
+      </h1>
+      <p
+        class="mt-6 text-lg sm:text-xl text-surface-300 max-w-2xl leading-relaxed"
+      >
+        {hero.intro}
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a
+          href={hero.primaryCta.href}
+          class="inline-flex items-center px-6 py-3 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700 transition-colors"
+        >
+          {hero.primaryCta.label}
+        </a>
+        <a
+          href={hero.secondaryCta.href}
+          class="inline-flex items-center px-6 py-3 rounded-lg border border-surface-600 text-surface-200 font-medium hover:bg-surface-800 hover:border-surface-500 transition-colors"
+        >
+          {hero.secondaryCta.label}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        heading={sections.projects.heading}
+        subheading={sections.projects.subheading}
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+          featuredProjects.map((project) => (
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              stack={project.data.stack}
+              github={project.data.github}
+              live={project.data.live}
+              slug={project.slug}
+              image={project.data.image}
+              role={project.data.role}
+            />
+          ))
+        }
+      </div>
+      <div class="mt-8 text-center">
+        <a
+          href="/projects"
+          class="text-primary-600 hover:text-primary-700 font-medium text-sm"
+        >
+          View all projects &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-surface-900">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        heading={sections.games.heading}
+        subheading={sections.games.subheading}
+        dark
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+          featuredGames.map((game) => (
+            <GameCard
+              title={game.data.title}
+              pitch={game.data.pitch}
+              genre={game.data.genre}
+              platform={game.data.platform}
+              itchUrl={game.data.itchUrl}
+              github={game.data.github}
+              slug={game.slug}
+              image={game.data.image}
+              tags={game.data.tags}
+            />
+          ))
+        }
+      </div>
+      <div class="mt-8 text-center">
+        <a
+          href="/games"
+          class="text-primary-400 hover:text-primary-300 font-medium text-sm"
+        >
+          View all games &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-surface-900">Let's Connect</h2>
+      <p class="mt-3 text-lg text-surface-500">
+        Interested in working together or want to learn more?
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a
+          href="/resume"
+          class="inline-flex items-center px-6 py-3 rounded-lg bg-surface-900 text-white font-medium hover:bg-surface-800 transition-colors"
+        >
+          View Resume
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center px-6 py-3 rounded-lg border border-surface-300 text-surface-700 font-medium hover:bg-surface-100 transition-colors"
+        >
+          Get in Touch
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

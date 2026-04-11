@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/shared/SectionHeading.astro';
+import ProjectCard from '../../components/shared/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="Projects"
+  description="Selected software development projects by Toby McGuire."
+>
+  <section class="py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionHeading
+        heading="Projects"
+        subheading="A curated selection of my software development work."
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+          projects.map((project) => (
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              stack={project.data.stack}
+              github={project.data.github}
+              live={project.data.live}
+              slug={project.slug}
+              image={project.data.image}
+              role={project.data.role}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

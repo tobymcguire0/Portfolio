@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Resume"
+  description="Toby McGuire's resume — software developer and game developer."
+>
+  <section class="py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
+        <div>
+          <h1 class="text-4xl font-bold text-surface-900">Resume</h1>
+          <p class="mt-2 text-surface-500">
+            Software Developer & Game Developer
+          </p>
+        </div>
+        <a
+          href="/resume/Toby-McGuire-Resume.pdf"
+          download
+          class="inline-flex items-center px-5 py-2.5 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700 transition-colors text-sm self-start"
+        >
+          Download PDF
+        </a>
+      </div>
+
+      <div class="space-y-12">
+        <div>
+          <h2 class="text-2xl font-bold text-surface-900 mb-4">Skills</h2>
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <h3 class="font-semibold text-surface-700 mb-2">Languages</h3>
+              <div class="flex flex-wrap gap-2">
+                {
+                  ['TypeScript', 'C#', 'JavaScript', 'Python', 'HTML/CSS'].map(
+                    (s) => (
+                      <span class="px-3 py-1 text-sm bg-surface-100 text-surface-700 rounded-full">
+                        {s}
+                      </span>
+                    ),
+                  )
+                }
+              </div>
+            </div>
+            <div>
+              <h3 class="font-semibold text-surface-700 mb-2">Technologies</h3>
+              <div class="flex flex-wrap gap-2">
+                {
+                  [
+                    'Unity',
+                    'React',
+                    'Node.js',
+                    'Astro',
+                    'Tailwind CSS',
+                    'Git',
+                  ].map((s) => (
+                    <span class="px-3 py-1 text-sm bg-surface-100 text-surface-700 rounded-full">
+                      {s}
+                    </span>
+                  ))
+                }
+              </div>
+            </div>
+            <div>
+              <h3 class="font-semibold text-surface-700 mb-2">
+                Game Development
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                {
+                  [
+                    'Unity Engine',
+                    'Multiplayer Networking',
+                    'Procedural Generation',
+                    'Shader Programming',
+                  ].map((s) => (
+                    <span class="px-3 py-1 text-sm bg-surface-100 text-surface-700 rounded-full">
+                      {s}
+                    </span>
+                  ))
+                }
+              </div>
+            </div>
+            <div>
+              <h3 class="font-semibold text-surface-700 mb-2">Other</h3>
+              <div class="flex flex-wrap gap-2">
+                {
+                  [
+                    'Full-Stack Development',
+                    'Database Design',
+                    'REST APIs',
+                    'Version Control',
+                  ].map((s) => (
+                    <span class="px-3 py-1 text-sm bg-surface-100 text-surface-700 rounded-full">
+                      {s}
+                    </span>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-bold text-surface-900 mb-4">
+            Key Projects
+          </h2>
+          <div class="space-y-6">
+            <div class="border-l-2 border-primary-500 pl-4">
+              <h3 class="font-semibold text-surface-800">Sumo</h3>
+              <p class="text-sm text-surface-500">
+                Multiplayer Fighting Game &middot; Unity, C#
+              </p>
+              <p class="mt-1 text-surface-600 text-sm">
+                Competitive multiplayer sumo game with online networking.
+                Evolved from a prototype to a polished game targeting Steam
+                release, with focus on real-time multiplayer synchronization.
+              </p>
+            </div>
+            <div class="border-l-2 border-primary-500 pl-4">
+              <h3 class="font-semibold text-surface-800">Cookbook</h3>
+              <p class="text-sm text-surface-500">
+                Full-Stack Web App &middot; TypeScript, React, Node.js
+              </p>
+              <p class="mt-1 text-surface-600 text-sm">
+                Recipe organization application built to develop full-stack
+                skills including database management, API design, and web server
+                architecture.
+              </p>
+            </div>
+            <div class="border-l-2 border-primary-500 pl-4">
+              <h3 class="font-semibold text-surface-800">Transmission</h3>
+              <p class="text-sm text-surface-500">
+                Puzzle Game &middot; Published on itch.io
+              </p>
+              <p class="mt-1 text-surface-600 text-sm">
+                A browser-playable puzzle game about choosing the correct
+                frequency. Designed and developed as a complete, published game.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-surface-100 rounded-xl p-6 text-center">
+          <p class="text-surface-600">
+            For full experience details and education history, please download
+            the complete resume.
+          </p>
+          <a
+            href="/resume/Toby-McGuire-Resume.pdf"
+            download
+            class="inline-flex items-center mt-3 px-5 py-2.5 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700 transition-colors text-sm"
+          >
+            Download PDF Resume
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

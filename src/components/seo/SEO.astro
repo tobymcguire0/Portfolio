@@ -1,0 +1,35 @@
+---
+import { siteConfig } from '../../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title,
+  description = siteConfig.description,
+  ogImage,
+  canonicalUrl,
+} = Astro.props;
+const fullTitle =
+  title === siteConfig.name ? title : `${title} | ${siteConfig.name}`;
+const canonical =
+  canonicalUrl || new URL(Astro.url.pathname, siteConfig.url).href;
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={siteConfig.name} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}

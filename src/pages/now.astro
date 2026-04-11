@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const nowEntries = (await getCollection('now')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+const latest = nowEntries[0];
+const { Content } = await latest.render();
+---
+
+<BaseLayout
+  title="Now"
+  description="What Toby McGuire is currently working on."
+>
+  <section class="py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold text-surface-900">Now</h1>
+      <p class="mt-2 text-surface-500">
+        Last updated: <time datetime={latest.data.date.toISOString()}>
+          {
+            latest.data.date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          }
+        </time>
+      </p>
+      <p class="mt-1 text-sm text-surface-400">
+        This is a <a
+          href="https://nownownow.com/about"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-primary-600 hover:underline">now page</a
+        >.
+      </p>
+
+      <div class="mt-10 prose prose-slate max-w-none">
+        <Content />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/shared/SectionHeading.astro';
+import GameCard from '../../components/shared/GameCard.astro';
+import { getCollection } from 'astro:content';
+
+const games = (await getCollection('games')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="Games"
+  description="Games developed by Toby McGuire, from published titles to ongoing projects."
+>
+  <section class="bg-surface-900 min-h-screen">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <SectionHeading
+        heading="Games"
+        subheading="Published games and ongoing game development work."
+        dark
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+          games.map((game) => (
+            <GameCard
+              title={game.data.title}
+              pitch={game.data.pitch}
+              genre={game.data.genre}
+              platform={game.data.platform}
+              itchUrl={game.data.itchUrl}
+              github={game.data.github}
+              slug={game.slug}
+              image={game.data.image}
+              tags={game.data.tags}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
