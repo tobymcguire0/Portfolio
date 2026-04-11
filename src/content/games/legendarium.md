@@ -4,6 +4,7 @@ pitch: An ambitious RPG project exploring narrative systems and game world build
 genre: RPG
 platform: Desktop
 github: https://github.com/tobymcguire0/Legendarium
+image: /public/images/games/Legendarium/legendarium-main.png
 tags: [RPG, Unity, C#]
 featured: false
 order: 5

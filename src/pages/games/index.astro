@@ -30,6 +30,7 @@ const games = (await getCollection('games')).sort(
               platform={game.data.platform}
               itchUrl={game.data.itchUrl}
               github={game.data.github}
+              steam={game.data.steam}
               slug={game.slug}
               image={game.data.image}
               tags={game.data.tags}

@@ -8,6 +8,6 @@ order: 1
 role: Solo developer
 ---
 
-Cookbook is a personal project aimed at learning full-stack development fundamentals. The app allows users to organize, search, and manage recipes through a clean interface.
+Cookbook is a personal project aimed at learning full stack development fundamentals. The app allows users to organize, search, and manage recipes through a clean interface.
 
-Built with TypeScript across the stack, it covers frontend UI, backend API design, database management, and deployment considerations. It represents the first in a planned series of projects focused on building deep full-stack proficiency.
+Built with TypeScript across the stack, it covers frontend UI, backend API design, database management, and deployment considerations. It represents the first in a planned series of projects focused on building deep full stack proficiency.

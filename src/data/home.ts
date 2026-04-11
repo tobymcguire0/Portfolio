@@ -1,7 +1,7 @@
 export const homeContent = {
   hero: {
     greeting: "Hi, I'm Toby McGuire",
-    tagline: 'Software Developer & Game Developer',
+    tagline: 'Software Developer',
     intro:
       "I build polished software and ship games. Whether it's a full-stack web app or a multiplayer fighting game, I care about clean design, solid architecture, and getting things out the door.",
     primaryCta: { label: 'View Projects', href: '/projects' },

@@ -4,6 +4,8 @@ pitch: A competitive multiplayer sumo game with online play, evolving from a sol
 genre: Fighting
 platform: PC
 itchUrl: https://toblet.itch.io/simply-sumo
+steam: https://store.steampowered.com/app/2974140/Sumo/?utm_source=portfolio
+image: /public/images/games/Sumo/sumo-main.png
 tags: [Multiplayer, Networking, Unity, C#]
 featured: true
 order: 1

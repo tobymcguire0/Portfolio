@@ -9,5 +9,3 @@ role: Solo developer
 ---
 
 A focused project exploring how to procedurally generate and place objects in a game world without overlap. Built in C# with Unity, this project demonstrates spatial awareness algorithms and randomized placement strategies commonly used in game development.
-
-The techniques explored here directly inform the procedural elements used in other game projects.

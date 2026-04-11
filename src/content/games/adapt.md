@@ -4,6 +4,7 @@ pitch: Gather and craft on a randomly generated island.
 genre: Survival
 platform: Desktop
 itchUrl: https://toblet.itch.io/adapt
+image: /public/images/games/Adapt/adapt-main.png
 tags: [Survival, Crafting, Procedural]
 featured: false
 order: 4

@@ -4,7 +4,8 @@ pitch: Rebuild the broken game by gathering pieces of its functionality!
 genre: Platformer
 platform: Desktop
 itchUrl: https://toblet.itch.io/we-lost-the-game
-tags: [Platformer, Meta, Game Jam]
+image: /public/images/games/WeLostTheGame/WLTG-main.png
+tags: [Platformer, Unity, Game Jam]
 featured: true
 order: 3
 ---
