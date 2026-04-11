@@ -3,7 +3,7 @@ export const siteConfig = {
   title: 'Toby McGuire — Software & Game Developer',
   description:
     'Portfolio of Toby McGuire, a software developer and game developer building polished applications and games.',
-  url: 'https://toblet.net',
+  url: 'https://tobymcguire.net',
   github: 'https://github.com/tobymcguire0',
   itch: 'https://toblet.itch.io',
   email: 'tobymcguire461@gmail.com',
