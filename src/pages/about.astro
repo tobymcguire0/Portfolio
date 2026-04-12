@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteConfig } from '../data/site';
+import { homeContent } from '../data/home';
+const { photos } = homeContent;
 ---
 
 <BaseLayout
@@ -9,8 +11,14 @@ import { siteConfig } from '../data/site';
 >
   <section class="py-20">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-bold text-surface-900">About Me</h1>
-
+      <h1 class="text-4xl font-bold text-surface-900">
+        <img
+          src={photos.icon}
+          alt="Toby McGuire profile photo"
+          class="inline-block w-12 h-12 mr-2 rounded-full object-cover"
+        />
+        About Me
+      </h1>
       <div class="mt-8 space-y-6 text-surface-600 leading-relaxed">
         <p class="text-lg">
           I'm Toby McGuire, a developer who builds both software and games. I
@@ -32,6 +40,11 @@ import { siteConfig } from '../data/site';
           taught me a lot about real-time networking, game polish, and shipping
           something that feels complete.
         </p>
+          
+        <p>
+          Outside of programming I enjoy running, the outdoors, and spending time with my cats.
+          I've run in a couple marathons and am training for more.
+        </p>
 
         <p>
           I've also published several games on itch.io: puzzle games,
@@ -44,6 +57,24 @@ import { siteConfig } from '../data/site';
           work well. I'm always learning, always building, and always looking for
           the next interesting problem to solve.
         </p>
+      </div>
+
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 float-center align-middle place-items-center">
+        <img
+          src={photos.marathon}
+          alt="Toby running a marathon"
+          class="w-full aspect-[4/3] object-cover rounded-lg"
+        />
+        <img
+          src={photos.vab}
+          alt="Toby at the Vehicle Assembly Building"
+          class="w-full aspect-[4/4] object-cover rounded-lg"
+        />
+        <img
+          src={photos.cats}
+          alt="Toby's cats"
+          class="w-full aspect-[4/3] object-cover rounded-lg"
+        />
       </div>
 
       <div class="mt-12 flex flex-wrap gap-4">

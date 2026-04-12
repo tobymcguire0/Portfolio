@@ -19,13 +19,18 @@ const featuredGames = allGames
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 3);
 
-const { hero, sections } = homeContent;
+const { hero, sections, photos } = homeContent;
 ---
 
 <BaseLayout title={siteConfig.title} description={siteConfig.description}>
   <section class="bg-surface-900 text-white">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
       <p class="text-primary-400 font-medium text-sm tracking-wide uppercase">
+        <img
+          src={photos.icon}
+          alt="Toby McGuire profile photo"
+          class="inline-block w-12 h-12 mr-2 rounded-full object-cover"
+        />
         {hero.greeting}
       </p>
       <h1
