@@ -1,16 +1,17 @@
 export const homeContent = {
   hero: {
     greeting: "Hi, I'm Toby McGuire",
-    tagline: 'Software Developer',
+    tagline: 'Software Engineer',
+    subline: 'AI, Automation, Systems',
     intro:
-      "I create things people enjoy. Whether it's a full-stack web app or a multiplayer fighting game, I care about clean design, solid architecture, and getting things out the door.",
-    primaryCta: { label: 'View Projects', href: '/projects' },
+      "I build software that works in the real world. I'm drawn to problems where code has physical consequences: robotics, autonomous systems, AI, and anything I can learn from. I also make games.",
+    primaryCta: { label: 'View My Work', href: '/projects' },
     secondaryCta: { label: 'Play My Games', href: '/games' },
   },
   sections: {
     projects: {
       heading: 'Software Projects',
-      subheading: 'Selected work from my software development portfolio.',
+      subheading: 'Selected engineering work from my portfolio.',
     },
     games: {
       heading: 'Games',

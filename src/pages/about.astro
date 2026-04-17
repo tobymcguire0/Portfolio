@@ -7,11 +7,12 @@ const { photos } = homeContent;
 
 <BaseLayout
   title="About"
-  description="About Toby McGuire — software developer"
+  description="About Toby McGuire - software engineer focused on AI, 
+  autonomy, and robotics."
 >
   <section class="py-20">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-bold text-surface-900">
+      <h1 class="text-4xl font-bold text-text">
         <img
           src={photos.icon}
           alt="Toby McGuire profile photo"
@@ -19,43 +20,31 @@ const { photos } = homeContent;
         />
         About Me
       </h1>
-      <div class="mt-8 space-y-6 text-surface-600 leading-relaxed">
+      <div class="mt-8 space-y-6 text-text-700 leading-relaxed">
         <p class="text-lg">
-          I'm Toby McGuire, a developer who builds both software and games. I
-          like working across the life cycle of a problem, from concept to completion. 
+          I'm Toby McGuire, a software engineer with an interest in AI, autonomy,
+          and robotics. My career started in underwater robotics where I built
+          ML pipelines for object detection in low-visibility environments. This 
+          has since automated testing and integrated systems engineering at Boeing. 
+          I'm drawn to work where software has a physical consequence, and I can learn
+          a lot along the way.
         </p>
 
         <p>
-          On the software side, my biggest strength is in my adaptability. I'm used to
-          diving into massive, complex codebases and quickly finding my footing. Recently,
-          I've been focused on growing my full-stack skills through projects like
-          Cookbook, a recipe organization app that touches everything from
-          frontend UI to backend architecture, and creating this portfolio site.
+          On the ML side, I've built synthetic data generation pipelines,
+          automated stereo image processing workflows, and implemented
+          research paper algorithms in real deployment environments. On the
+          systems side, I've worked across large C++ codebases,
+          cross-functional hardware-adjacent teams, and validation frameworks
+          that touch real sensor data. I'm currently building out my full stack
+          skills through projects like Saucer, a TypeScript/React/Node.js
+          app, using AWS for authentication and cloud storage.
         </p>
 
         <p>
-          On the game dev side, I build with C# and Unity. My biggest project
-          right now is Sumo, a multiplayer fighting game that started as a small
-          prototype on itch.io and grew into something heading for Steam. Working on it has
-          taught me a lot about real-time networking, game polish, and shipping
-          something that feels complete.
-        </p>
-          
-        <p>
-          Outside of programming I enjoy running, the outdoors, and spending time with my cats.
-          I've run in a couple marathons and am training for more.
-        </p>
-
-        <p>
-          I've also published several games on itch.io: puzzle games,
-          platformers, survival games, each one a chance to explore a different
-          corner of game design and development.
-        </p>
-
-        <p>
-          I care about clean code, clear architecture, and building things that
-          work well. I'm always learning, always building, and always looking for
-          the next interesting problem to solve.
+          Outside of engineering, I make games. I've shipped multiple titles
+          on Steam and itch.io, run two marathons, and skied all over the
+          western US and Whistler. I also have two cats, Fern (Black) and Faun (Calico).
         </p>
       </div>
 
@@ -82,7 +71,7 @@ const { photos } = homeContent;
           href={siteConfig.github}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center px-5 py-2.5 rounded-lg border border-surface-300 text-surface-700 font-medium hover:bg-surface-100 transition-colors text-sm"
+          class="inline-flex items-center px-5 py-2.5 rounded-lg border border-text-300 text-text-800 font-medium hover:bg-background-100 transition-colors text-sm"
         >
           GitHub
         </a>
@@ -90,13 +79,13 @@ const { photos } = homeContent;
           href={siteConfig.itch}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center px-5 py-2.5 rounded-lg border border-surface-300 text-surface-700 font-medium hover:bg-surface-100 transition-colors text-sm"
+          class="inline-flex items-center px-5 py-2.5 rounded-lg border border-text-300 text-text-800 font-medium hover:bg-background-100 transition-colors text-sm"
         >
           itch.io
         </a>
         <a
           href="/contact"
-          class="inline-flex items-center px-5 py-2.5 rounded-lg bg-primary-600 text-white font-medium hover:bg-primary-700 transition-colors text-sm"
+          class="inline-flex items-center px-5 py-2.5 rounded-lg bg-accent text-white font-medium hover:bg-accent-700 transition-colors text-sm"
         >
           Get in Touch
         </a>

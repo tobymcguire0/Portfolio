@@ -13,31 +13,35 @@ const { Content } = await latest.render();
   title="Now"
   description="What Toby McGuire is currently working on."
 >
-  <section class="py-20">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-bold text-surface-900">Now</h1>
-      <p class="mt-2 text-surface-500">
-        Last updated: <time datetime={latest.data.date.toISOString()}>
-          {
-            latest.data.date.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })
-          }
-        </time>
-      </p>
-      <p class="mt-1 text-sm text-surface-400">
-        This is a <a
-          href="https://nownownow.com/about"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-primary-600 hover:underline">now page</a
-        >.
-      </p>
+  <section class="bg-surface-800 py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-3xl border border-surface-200 bg-background-50 px-6 py-12 shadow-xl sm:px-10 lg:px-12">
+        <div class="max-w-3xl mx-auto">
+          <h1 class="text-4xl font-bold text-text">Now</h1>
+          <p class="mt-2 text-text-600">
+            Last updated: <time datetime={latest.data.date.toISOString()}>
+              {
+                latest.data.date.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })
+              }
+            </time>
+          </p>
+          <p class="mt-1 text-sm text-text-500">
+            This is a <a
+              href="https://nownownow.com/about"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-accent hover:underline">now page</a
+            >.
+          </p>
 
-      <div class="mt-10 prose prose-slate max-w-none">
-        <Content />
+          <div class="mt-10 prose max-w-none">
+            <Content />
+          </div>
+        </div>
       </div>
     </div>
   </section>

@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: 'Toby McGuire',
-  title: 'Toby McGuire — Software Developer',
+  title: 'Toby McGuire - Software Engineer',
   description:
-    'Portfolio of Toby McGuire, a software developer building polished applications and games.',
+    'Portfolio of Toby McGuire, a software engineer interested in AI, automation, and robotics systems.',
   url: 'https://tobymcguire.net',
   github: 'https://github.com/tobymcguire0',
   itch: 'https://toblet.itch.io',

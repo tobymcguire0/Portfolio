@@ -8,8 +8,8 @@ interface Props {
 
 const { heading, subheading, align = 'left', dark = false } = Astro.props;
 const alignClass = align === 'center' ? 'text-center' : '';
-const headingColor = dark ? 'text-white' : 'text-surface-900';
-const subColor = dark ? 'text-surface-400' : 'text-surface-500';
+const headingColor = dark ? 'text-background-50' : 'text-text';
+const subColor = dark ? 'text-surface-100' : 'text-text-600';
 ---
 
 <div class={`mb-10 ${alignClass}`}>

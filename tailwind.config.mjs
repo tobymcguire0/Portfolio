@@ -1,4 +1,7 @@
 import typography from '@tailwindcss/typography';
+import { activeThemeTokens } from './theme.config.mjs';
+
+const { accent, surface, text, background } = activeThemeTokens;
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -6,36 +9,54 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#f0f4ff',
-          100: '#dbe4ff',
-          200: '#bac8ff',
-          300: '#91a7ff',
-          400: '#748ffc',
-          500: '#5c7cfa',
-          600: '#4c6ef5',
-          700: '#4263eb',
-          800: '#3b5bdb',
-          900: '#364fc7',
-          950: '#2b3fa0',
-        },
-        surface: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
-        },
+        accent,
+        surface,
+        text,
+        background,
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            '--tw-prose-body': text[700],
+            '--tw-prose-headings': text[950],
+            '--tw-prose-links': accent[600],
+            '--tw-prose-bold': text[900],
+            '--tw-prose-counters': text[500],
+            '--tw-prose-bullets': accent[400],
+            '--tw-prose-hr': text[200],
+            '--tw-prose-quotes': text[900],
+            '--tw-prose-quote-borders': accent[200],
+            '--tw-prose-captions': text[500],
+            '--tw-prose-code': text[900],
+            '--tw-prose-pre-code': background[50],
+            '--tw-prose-pre-bg': surface[900],
+            '--tw-prose-th-borders': text[200],
+            '--tw-prose-td-borders': text[200],
+          },
+        },
+        invert: {
+          css: {
+            '--tw-prose-invert-body': surface[100],
+            '--tw-prose-invert-headings': background[50],
+            '--tw-prose-invert-links': accent[100],
+            '--tw-prose-invert-bold': background[50],
+            '--tw-prose-invert-counters': surface[300],
+            '--tw-prose-invert-bullets': surface[300],
+            '--tw-prose-invert-hr': surface[700],
+            '--tw-prose-invert-quotes': background[50],
+            '--tw-prose-invert-quote-borders': surface[500],
+            '--tw-prose-invert-captions': surface[300],
+            '--tw-prose-invert-code': background[50],
+            '--tw-prose-invert-pre-code': background[50],
+            '--tw-prose-invert-pre-bg': surface[950],
+            '--tw-prose-invert-th-borders': surface[700],
+            '--tw-prose-invert-td-borders': surface[700],
+          },
+        },
       },
     },
   },

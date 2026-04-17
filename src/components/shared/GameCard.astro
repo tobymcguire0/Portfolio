@@ -27,7 +27,7 @@ const {
 ---
 
 <article
-  class="group relative rounded-xl border border-surface-700 bg-gradient-to-b from-surface-800 to-surface-900 text-white overflow-hidden hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300"
+  class="group relative rounded-xl border border-surface-700 bg-gradient-to-b from-surface-700 to-surface-950 hover:from-surface-500 hover:to-surface-950 text-white overflow-hidden hover:to-surface-800 hover:from-surface-550 hover:shadow-xl hover:shadow-accent-800/10 transition-all duration-300"
 >
   {
     image ? (
@@ -40,7 +40,7 @@ const {
         />
       </div>
     ) : (
-      <div class="aspect-video bg-gradient-to-br from-primary-600/20 to-primary-900/40 flex items-center justify-center">
+      <div class="aspect-video bg-gradient-to-br from-accent-500/20 to-surface-950/80 flex items-center justify-center">
         <span class="text-5xl opacity-30 select-none" aria-hidden="true">
           &#x1F3AE;
         </span>
@@ -49,23 +49,23 @@ const {
   }
   <div class="p-5">
     <div class="flex items-center gap-2 mb-2">
-      <span
-        class="text-xs font-medium px-2 py-0.5 rounded-full bg-primary-500/20 text-primary-300"
+        <span
+        class="text-xs font-medium px-2 py-0.5 rounded-full bg-accent-500/20 text-accent-100"
         >{genre}</span
       >
-      <span class="text-xs text-surface-400">{platform}</span>
+      <span class="text-xs text-surface-200">{platform}</span>
     </div>
     <h3
-      class="text-lg font-bold text-white group-hover:text-primary-300 transition-colors"
+      class="text-lg font-bold text-white group-hover:text-accent-100 transition-colors"
     >
       <a href={`/games/${slug}`} class="hover:underline">{title}</a>
     </h3>
-    <p class="mt-2 text-surface-300 text-sm leading-relaxed">{pitch}</p>
+    <p class="mt-2 text-surface-100 text-sm leading-relaxed">{pitch}</p>
     {
       tags.length > 0 && (
         <div class="mt-3 flex flex-wrap gap-1.5">
           {tags.map((tag) => (
-            <span class="text-xs px-2 py-0.5 rounded bg-surface-700 text-surface-300">
+            <span class="text-xs px-2 py-0.5 rounded bg-surface-700 text-surface-100">
               {tag}
             </span>
           ))}
@@ -79,7 +79,7 @@ const {
             href={steam}
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm text-primary-400 hover:text-primary-300 font-medium transition-colors"
+            class="text-sm text-accent-100 hover:text-white font-medium transition-colors"
           >
             View on Steam &rarr;
           </a>
@@ -91,7 +91,7 @@ const {
             href={itchUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm text-primary-400 hover:text-primary-300 font-medium transition-colors"
+            class="text-sm text-accent-100 hover:text-white font-medium transition-colors"
           >
             Play on itch.io &rarr;
           </a>
@@ -103,7 +103,7 @@ const {
             href={github}
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm text-surface-400 hover:text-surface-200 transition-colors"
+            class="text-sm text-surface-200 hover:text-white transition-colors"
           >
             Source &rarr;
           </a>
