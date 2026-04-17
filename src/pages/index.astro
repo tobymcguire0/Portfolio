@@ -29,7 +29,7 @@ const { hero, sections, photos } = homeContent;
         <img
           src={photos.icon}
           alt="Toby McGuire profile photo"
-          class="inline-block w-12 h-12 mr-2 rounded-full object-cover"
+          class="inline-block w-32 h-32 mr-2 rounded-full object-cover"
         />
         {hero.greeting}
       </p>
@@ -38,6 +38,9 @@ const { hero, sections, photos } = homeContent;
       >
         {hero.tagline}
       </h1>
+      <h2 class="mt-0 text-base sm:text-lg lg:text-xl font-semibold tracking-tight text-primary-300">
+        {hero.subline}
+      </h2>
       <p
         class="mt-6 text-lg sm:text-xl text-surface-300 max-w-2xl leading-relaxed"
       >

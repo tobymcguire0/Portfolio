@@ -1,10 +1,96 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const skillSections = [
+  {
+    title: 'Languages',
+    items: ['C', 'C++', 'C#', 'Java', 'Python', 'TypeScript'],
+  },
+  {
+    title: 'AI / ML',
+    items: [
+      'TensorFlow',
+      'YoloV5',
+      'NumPy',
+      'PyTorch (learning)',
+      'Computer Vision',
+      'Deep Learning',
+    ],
+  },
+  {
+    title: 'Tools & Infra',
+    items: ['AWS', 'Docker', 'Git', 'Linux', 'Blender', 'Unity', 'Unreal Engine'],
+  },
+  {
+    title: 'Web (in progress)',
+    items: ['React', 'Node.js', 'TypeScript'],
+  },
+  {
+    title: 'Certifications',
+    items: ['AWS Cloud Practitioner', 'Secret Security Clearance'],
+  },
+];
+
+const keyProjects = [
+  {
+    title: 'Nauticus Robotics — Data Generation Pipeline',
+    stack: 'Python, Blender, TensorFlow, YoloV5',
+    description:
+      'Built a synthetic data generation pipeline producing 30,000+ labeled training images for underwater object detection. Automated stereo image processing for 90% throughput improvement. Implemented conic reconstruction algorithms from published research.',
+  },
+  {
+    title: 'OSU Underwater Robotics — ML Perception System',
+    stack: 'Unity, C#, Python, Machine Learning',
+    description:
+      'Built a real-time Unity simulation for visualizing robot navigation behavior. Applied ML techniques to auto-label thousands of data points for distance and rotation detection in low-visibility water.',
+  },
+  {
+    title: 'SUMO — Multiplayer Game',
+    stack: 'Unity, C#, Steamworks, FishNetworking',
+    description:
+      'Shipped a multiplayer fighting game to Steam. Built real-time networking from scratch including lobby systems, state synchronization, and latency management.',
+  },
+  {
+    title: 'Cookbook (in progress)',
+    stack: 'TypeScript, React, Node.js',
+    description:
+      'Full-stack recipe organization app. First in a planned series of projects for building deep web development proficiency — covering frontend UI, backend API, and database design.',
+  },
+];
+
+const workExperience = [
+  {
+    title: 'Boeing — Software Engineer IC2',
+    meta: 'Florida | 2022–Present',
+    bullets: [
+      'Developed automated integration tests validating vehicle software against real sensor data.',
+      'Designed automation tools that cut rework by 50% and eliminated months of manual effort.',
+      'Selected for multiple high-priority cross-functional teams across subsystems and infrastructure.',
+    ],
+  },
+  {
+    title: 'Nauticus Robotics — Software Engineer',
+    meta: 'Houston, TX',
+    bullets: [
+      'Built a Blender-based synthetic data pipeline generating 30,000+ labeled ML training images.',
+      'Automated stereo image processing pipeline, improving throughput by 90%.',
+      'Implemented conic reconstruction algorithms from research papers for real-world computer vision deployment.',
+    ],
+  },
+  {
+    title: 'OSU Underwater Robotics — Software Engineer',
+    meta: 'Columbus, OH',
+    bullets: [
+      'Built a Unity simulation for real-time visualization of robot navigation and perception.',
+      'Applied ML techniques to auto-label thousands of data points for underwater object detection.',
+    ],
+  },
+];
 ---
 
 <BaseLayout
   title="Resume"
-  description="Toby McGuire's resume — software developer and game developer."
+  description="Toby McGuire's resume — software engineer focused on AI, ML, and robotics systems."
 >
   <section class="py-20">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,7 +98,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div>
           <h1 class="text-4xl font-bold text-surface-900">Resume</h1>
           <p class="mt-2 text-surface-500">
-            Software Developer & Game Developer
+            Software Engineer — AI, ML & Robotics Systems
           </p>
         </div>
         <a
@@ -28,73 +114,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div>
           <h2 class="text-2xl font-bold text-surface-900 mb-4">Skills</h2>
           <div class="grid sm:grid-cols-2 gap-6">
-            <div>
-              <h3 class="font-semibold text-surface-700 mb-2">Languages</h3>
-              <div class="flex flex-wrap gap-2">
-                {
-                  ['TypeScript', 'C#', 'JavaScript', 'Python', 'HTML/CSS'].map(
-                    (s) => (
+            {
+              skillSections.map((section) => (
+                <div>
+                  <h3 class="font-semibold text-surface-700 mb-2">
+                    {section.title}
+                  </h3>
+                  <div class="flex flex-wrap gap-2">
+                    {section.items.map((item) => (
                       <span class="px-3 py-1 text-sm bg-surface-100 text-surface-700 rounded-full">
-                        {s}
+                        {item}
                       </span>
-                    ),
-                  )
-                }
-              </div>
-            </div>
-            <div>
-              <h3 class="font-semibold text-surface-700 mb-2">Technologies</h3>
-              <div class="flex flex-wrap gap-2">
-                {
-                  [
-                    'Unity',
-                    'React',
-                    'Factory CLI',
-                    'Github Copilot',
-                    'Git'
-                  ].map((s) => (
-                    <span class="px-3 py-1 text-sm bg-surface-100 text-surface-700 rounded-full">
-                      {s}
-                    </span>
-                  ))
-                }
-              </div>
-            </div>
-            <div>
-              <h3 class="font-semibold text-surface-700 mb-2">
-                Game Development
-              </h3>
-              <div class="flex flex-wrap gap-2">
-                {
-                  [
-                    'Unity Engine',
-                    'Multiplayer Networking',
-                    'Procedural Generation',
-                  ].map((s) => (
-                    <span class="px-3 py-1 text-sm bg-surface-100 text-surface-700 rounded-full">
-                      {s}
-                    </span>
-                  ))
-                }
-              </div>
-            </div>
-            <div>
-              <h3 class="font-semibold text-surface-700 mb-2">Other</h3>
-              <div class="flex flex-wrap gap-2">
-                {
-                  [
-                    'Full-Stack Development',
-                    'Database Design',
-                    'Adaptability',
-                    'Version Control',
-                  ].map((s) => (
-                    <span class="px-3 py-1 text-sm bg-surface-100 text-surface-700 rounded-full">
-                      {s}
-                    </span>
-                  ))
-                }
-              </div>
-            </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
           </div>
         </div>
 
@@ -103,45 +138,47 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             Key Projects
           </h2>
           <div class="space-y-6">
-            <div class="border-l-2 border-primary-500 pl-4">
-              <h3 class="font-semibold text-surface-800">Sumo</h3>
-              <p class="text-sm text-surface-500">
-                Multiplayer Fighting Game &middot; Unity, C#
-              </p>
-              <p class="mt-1 text-surface-600 text-sm">
-                Competitive multiplayer sumo game with online networking.
-                Evolved from a prototype to a polished game targeting Steam
-                release, with focus on real-time multiplayer synchronization.
-              </p>
-            </div>
-            <div class="border-l-2 border-primary-500 pl-4">
-              <h3 class="font-semibold text-surface-800">Cookbook</h3>
-              <p class="text-sm text-surface-500">
-                Full-Stack Web App &middot; TypeScript, React, Node.js
-              </p>
-              <p class="mt-1 text-surface-600 text-sm">
-                Recipe organization application built to develop full-stack
-                skills including database management, API design, and web server
-                architecture.
-              </p>
-            </div>
-            <div class="border-l-2 border-primary-500 pl-4">
-              <h3 class="font-semibold text-surface-800">Transmission</h3>
-              <p class="text-sm text-surface-500">
-                Puzzle Game &middot; Published on itch.io
-              </p>
-              <p class="mt-1 text-surface-600 text-sm">
-                A browser-playable puzzle game about choosing the correct
-                frequency. Designed and developed as a complete, published game.
-              </p>
-            </div>
+            {
+              keyProjects.map((project) => (
+                <div class="border-l-2 border-primary-500 pl-4">
+                  <h3 class="font-semibold text-surface-800">{project.title}</h3>
+                  <p class="text-sm text-surface-500">Stack: {project.stack}</p>
+                  <p class="mt-1 text-surface-600 text-sm">
+                    {project.description}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-bold text-surface-900 mb-4">
+            Work Experience
+          </h2>
+          <div class="space-y-6">
+            {
+              workExperience.map((role) => (
+                <div class="border border-surface-200 rounded-xl p-5 bg-white">
+                  <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
+                    <h3 class="font-semibold text-surface-800">{role.title}</h3>
+                    <p class="text-sm text-surface-500">{role.meta}</p>
+                  </div>
+                  <ul class="mt-3 space-y-2 text-sm text-surface-600 list-disc pl-5">
+                    {role.bullets.map((bullet) => (
+                      <li>{bullet}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
           </div>
         </div>
 
         <div class="bg-surface-100 rounded-xl p-6 text-center">
           <p class="text-surface-600">
-            For full experience details and education history, please download
-            the complete resume.
+            For full education details and a printable version, download the
+            complete resume.
           </p>
           <a
             href="/resume/Toby-McGuire-Resume.pdf"

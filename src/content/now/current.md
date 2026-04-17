@@ -9,7 +9,7 @@ The biggest project on my plate right now is **Sumo**. It's a competitive multip
 
 Multiplayer was the main learning intention behind this project. Building reliable online play meant working with many edge cases, connection issues, client smoothing, and all the challenges that come with networked game state. That learning goal is paying off, and the game is getting close to the finish line.
 
-## Cookbook
+## Saucer
 
-On the side, I've been building **Cookbook**, a recipe organization app. It's the first in what I plan to be a series of projects aimed at building my full stack development skills. The goal of this project isn't the app itself, rather its making a testbench to get hands on with databases, web server architecture, and end to end application development.
+On the side, I've been building **Saucer**, a recipe organization app. It's the first in what I plan to be a series of projects aimed at building my full stack development skills. The goal of this project isn't the app itself, rather its making a testbench to get hands on with databases, web server architecture, and end to end application development.
 
