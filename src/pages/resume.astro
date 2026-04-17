@@ -14,12 +14,11 @@ const skillSections = [
       'NumPy',
       'PyTorch (learning)',
       'Computer Vision',
-      'Deep Learning',
     ],
   },
   {
     title: 'Tools & Infra',
-    items: ['AWS', 'Docker', 'Git', 'Linux', 'Blender', 'Unity', 'Unreal Engine'],
+    items: ['AWS', 'Docker', 'Git', 'Linux', 'Blender', 'Unity'],
   },
   {
     title: 'Web (in progress)',
@@ -33,35 +32,36 @@ const skillSections = [
 
 const keyProjects = [
   {
-    title: 'Nauticus Robotics — Data Generation Pipeline',
+    title: 'Nauticus Robotics: Data Generation Pipeline',
     stack: 'Python, Blender, TensorFlow, YoloV5',
     description:
       'Built a synthetic data generation pipeline producing 30,000+ labeled training images for underwater object detection. Automated stereo image processing for 90% throughput improvement. Implemented conic reconstruction algorithms from published research.',
   },
   {
-    title: 'OSU Underwater Robotics — ML Perception System',
+    title: 'OSU Underwater Robotics: ML Perception System',
     stack: 'Unity, C#, Python, Machine Learning',
     description:
       'Built a real-time Unity simulation for visualizing robot navigation behavior. Applied ML techniques to auto-label thousands of data points for distance and rotation detection in low-visibility water.',
   },
   {
-    title: 'SUMO — Multiplayer Game',
+    title: 'SUMO: Multiplayer Game',
     stack: 'Unity, C#, Steamworks, FishNetworking',
     description:
       'Shipped a multiplayer fighting game to Steam. Built real-time networking from scratch including lobby systems, state synchronization, and latency management.',
   },
   {
-    title: 'Cookbook (in progress)',
+    title: 'Saucer (in progress)',
     stack: 'TypeScript, React, Node.js',
     description:
-      'Full-stack recipe organization app. First in a planned series of projects for building deep web development proficiency — covering frontend UI, backend API, and database design.',
+      'Full-stack recipe organization app. First in a planned series of projects for building deep web development proficiency - covering frontend UI, backend API, and database design.',
   },
 ];
 
 const workExperience = [
   {
-    title: 'Boeing — Software Engineer IC2',
-    meta: 'Florida | 2022–Present',
+    title: 'Boeing',
+    position: 'Software Engineer IC2',
+    meta: 'Florida | 2023–Present',
     bullets: [
       'Developed automated integration tests validating vehicle software against real sensor data.',
       'Designed automation tools that cut rework by 50% and eliminated months of manual effort.',
@@ -69,8 +69,9 @@ const workExperience = [
     ],
   },
   {
-    title: 'Nauticus Robotics — Software Engineer',
-    meta: 'Houston, TX',
+    title: 'Nauticus Robotics',
+    position: 'Software Engineer',
+    meta: 'Houston, TX | 2022',
     bullets: [
       'Built a Blender-based synthetic data pipeline generating 30,000+ labeled ML training images.',
       'Automated stereo image processing pipeline, improving throughput by 90%.',
@@ -78,8 +79,9 @@ const workExperience = [
     ],
   },
   {
-    title: 'OSU Underwater Robotics — Software Engineer',
-    meta: 'Columbus, OH',
+    title: 'OSU Underwater Robotics',
+    position: 'Autonomy & Perception Engineer',
+    meta: 'Columbus, OH | 2020–2024',
     bullets: [
       'Built a Unity simulation for real-time visualization of robot navigation and perception.',
       'Applied ML techniques to auto-label thousands of data points for underwater object detection.',
@@ -90,7 +92,7 @@ const workExperience = [
 
 <BaseLayout
   title="Resume"
-  description="Toby McGuire's resume — software engineer focused on AI, ML, and robotics systems."
+  description="Toby McGuire's resume - software engineer focused on AI, Autonomy, and Robotics."
 >
   <section class="py-20">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -98,7 +100,7 @@ const workExperience = [
         <div>
           <h1 class="text-4xl font-bold text-surface-900">Resume</h1>
           <p class="mt-2 text-surface-500">
-            Software Engineer — AI, ML & Robotics Systems
+            Software Engineer - AI, Autonomy & Robotics
           </p>
         </div>
         <a
@@ -161,7 +163,10 @@ const workExperience = [
               workExperience.map((role) => (
                 <div class="border border-surface-200 rounded-xl p-5 bg-white">
                   <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
-                    <h3 class="font-semibold text-surface-800">{role.title}</h3>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-1 justify-center">
+                      <h3 class="font-semibold text-surface-800">{role.title}</h3>
+                      <h4 class="text-xs italic text-surface-600">{role.position}</h4>
+                    </div>
                     <p class="text-sm text-surface-500">{role.meta}</p>
                   </div>
                   <ul class="mt-3 space-y-2 text-sm text-surface-600 list-disc pl-5">

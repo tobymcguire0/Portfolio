@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'Toby McGuire',
-  title: 'Toby McGuire — Software Engineer',
+  title: 'Toby McGuire - Software Engineer',
   description:
     'Portfolio of Toby McGuire, a software engineer interested in AI, automation, and robotics systems.',
   url: 'https://tobymcguire.net',
