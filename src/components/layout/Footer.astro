@@ -2,13 +2,13 @@
 import { siteConfig } from '../../data/site';
 ---
 
-<footer class="bg-surface-900 text-surface-300 mt-auto">
+<footer class="bg-surface-900 text-surface-200 mt-auto">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div
       class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6"
     >
       <div>
-        <p class="text-surface-100 font-semibold">{siteConfig.name}</p>
+        <p class="text-background-50 font-semibold">{siteConfig.name}</p>
         <p class="text-sm mt-1">Software Engineer - AI, Autonomy & Robotics</p>
       </div>
       <div class="flex items-center gap-4">
@@ -22,7 +22,7 @@ import { siteConfig } from '../../data/site';
                   ? undefined
                   : 'noopener noreferrer'
               }
-              class="text-surface-400 hover:text-surface-100 transition-colors text-sm"
+              class="text-surface-200 hover:text-white transition-colors text-sm"
               aria-label={link.label}
             >
               {link.label}
@@ -31,7 +31,7 @@ import { siteConfig } from '../../data/site';
         }
       </div>
     </div>
-    <div class="mt-8 pt-6 border-t border-surface-700 text-sm text-surface-500">
+    <div class="mt-8 pt-6 border-t border-surface-700 text-sm text-surface-300">
       <p>
         &copy; {new Date().getFullYear()}
         {siteConfig.name}. All rights reserved.
