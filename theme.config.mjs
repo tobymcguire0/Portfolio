@@ -1,14 +1,26 @@
 export const themes = {
-  default: {
-    text: '#1C2127',
-    surface: '#1C4B8F',
-    accent: '#3148F6',
-    background: '#E9E9E9',
-  },
+  coolTech: {
+     text: '#334155',
+     surface: '#5B6C8F',
+     accent: '#60A5FA',
+     background: '#E9EEF6',
+   },
+   electricBlue: {
+     text: '#1E2A44',
+     surface: '#2563EB',
+     accent: '#F43F5E',
+     background: '#DBEAFE',
+   },
+   tealTangerine: {
+     text: '#12343B',
+     surface: '#0F766E',
+     accent: '#F97316',
+     background: '#CCFBF1',
+   },
 };
 
 // Change this key to swap the site's base palette.
-export const activeThemeName = 'default';
+export const activeThemeName = 'tealTangerine';
 
 function hexToRgb(hex) {
   const normalized = hex.replace('#', '');
