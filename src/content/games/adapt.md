@@ -7,7 +7,7 @@ itchUrl: https://toblet.itch.io/adapt
 image: /images/games/Adapt/adapt-main.png
 tags: [Survival, Crafting, Procedural]
 featured: false
-order: 4
+order: 3
 ---
 
 Adapt drops players onto a randomly generated island where they must gather resources and craft to survive. Combines procedural generation with survival mechanics for replayable exploration.
