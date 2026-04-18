@@ -19,9 +19,9 @@ export const homeContent = {
     },
   },
   photos:{
-    icon: 'images/personal/profile.jpg',
-    marathon: 'images/personal/marathon.jpeg',
-    vab: 'images/personal/vab.jpeg',
-    cats: 'images/personal/cats.jpeg'
+    icon: '/images/personal/profile.jpg',
+    marathon: '/images/personal/marathon.jpeg',
+    vab: '/images/personal/vab.jpeg',
+    cats: '/images/personal/cats.jpeg'
   }
 } as const;
