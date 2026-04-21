@@ -11,5 +11,5 @@ Multiplayer was the main learning intention behind this project. Building reliab
 
 ## Saucer
 
-On the side, I've been building **Saucer**, a recipe organization app. It's the first in what I plan to be a series of projects aimed at building my full stack development skills. The goal of this project isn't the app itself, rather its making a testbench to get hands on with databases, web server architecture, and end to end application development.
+On the side, I've been updating my full-stack, AI, Cloud-based recipe organizatoin app **Saucer**. It's the first in what I plan to be a series of projects aimed at building my full stack development skills. The goal of this project isn't the app itself, rather using it as a testbench to get hands on with databases, web server architecture, and end to end application development.
 
