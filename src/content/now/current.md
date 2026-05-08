@@ -1,5 +1,5 @@
 ---
-date: 2026-04-11
+date: 2026-05-08
 title: What I'm up to right now
 ---
 
@@ -11,5 +11,9 @@ Multiplayer was the main learning intention behind this project. Building reliab
 
 ## Saucer
 
-On the side, I've been updating my full-stack, AI, Cloud-based recipe organizatoin app **Saucer**. It's the first in what I plan to be a series of projects aimed at building my full stack development skills. The goal of this project isn't the app itself, rather using it as a testbench to get hands on with databases, web server architecture, and end to end application development.
+On the side, I've been updating my full-stack, AI, Cloud-based recipe organizatoin app **Saucer**. It's the first in a series of projects aimed at building my full stack development skills. The goal of this project isn't the app itself, rather using it as a testbench to get hands on with databases, web server architecture, and end to end application development.
+
+## FernBot
+
+Most recently I built **Fern**, a local-first coding agent TUI. It runs on a local LLM via Ollama and uses pydantic-ai to drive a full coding-agent toolset with file edits, shell, REPL, glob/grep, web search, and a todo planner inside a Textual chat UI. The goal was to understand what actually goes into an agent loop end-to-end, and to have a daily driver assistant I fully control.
 

@@ -14,11 +14,13 @@ const skillSections = [
       'NumPy',
       'PyTorch (learning)',
       'Computer Vision',
+      'pydantic-ai',
+      'Ollama',
     ],
   },
   {
     title: 'Tools & Infra',
-    items: ['AWS', 'Docker', 'Git', 'Linux', 'Blender', 'Unity'],
+    items: ['AWS', 'Docker', 'Git', 'Linux', 'Blender', 'Unity', 'Textual'],
   },
   {
     title: 'Web',
@@ -50,10 +52,16 @@ const keyProjects = [
       'Shipped a multiplayer fighting game to Steam. Built real-time networking from scratch including lobby systems, state synchronization, and latency management.',
   },
   {
-    title: 'Saucer',
+    title: 'Saucer: Recipe Parser & Organizer',
     stack: 'TypeScript, React, Node.js, LLM, PostgreSQL',
     description:
       'Full-stack recipe organization app. Integrated LLMs for recipe parsing and generation. Built with React frontend, Node.js backend, and PostgreSQL database. Lives in a VPS for 24/7 availability'  ,
+  },
+  {
+    title: 'FernBot: Coding Agent',
+    stack: 'Python, pydantic-ai, Textual, Ollama',
+    description:
+      'Built a local-first coding agent TUI from scratch. Designed the tool surface (file edits, shell, REPL, glob/grep, web), wired a permission system for destructive operations, and integrated streamed output from a local LLM via Ollama.',
   },
 ];
 
