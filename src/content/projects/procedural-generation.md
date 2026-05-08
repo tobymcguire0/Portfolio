@@ -4,7 +4,7 @@ description: Exploration of procedural generation techniques for placing objects
 stack: [C#, Unity]
 github: https://github.com/tobymcguire0/Procedural_Generation
 featured: true
-order: 2
+order: 3
 role: Solo developer
 ---
 
