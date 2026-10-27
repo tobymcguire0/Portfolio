@@ -1,86 +1,31 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { InferGetStaticPropsType } from 'astro';
 import { getCollection } from 'astro:content';
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
+  // Entries without a case study are only listed on the homepage.
+  const projects = await getCollection('projects', ({ data }) => data.caseStudy !== undefined);
   return projects.map((project) => ({
     params: { slug: project.slug },
     props: { project },
   }));
 }
 
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
 const { project } = Astro.props;
+const { title, description, github, caseStudy } = project.data;
+if (!caseStudy) throw new Error(`${project.id} has no caseStudy`);
 const { Content } = await project.render();
-const { title, description, stack, github, live, image, role } = project.data;
 ---
 
-<BaseLayout title={title} description={description}>
-  <article class="py-20">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <a
-        href="/projects"
-        class="text-sm text-accent hover:text-accent-700 font-medium"
-      >
-        &larr; All Projects
-      </a>
-      <h1 class="mt-4 text-4xl font-bold text-text">{title}</h1>
-      {role && <p class="mt-2 text-text-600">{role}</p>}
-      <p class="mt-4 text-lg text-text-700">{description}</p>
-
-      <div class="mt-6 flex flex-wrap gap-2">
-        {
-          stack.map((tech) => (
-            <span class="inline-block px-3 py-1 text-sm font-medium bg-accent-100 text-accent-700 rounded-full">
-              {tech}
-            </span>
-          ))
-        }
-      </div>
-
-      <div class="mt-4 flex items-center gap-4">
-        {
-          github && (
-            <a
-              href={github}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-accent hover:text-accent-700 font-medium text-sm"
-            >
-              View on GitHub &rarr;
-            </a>
-          )
-        }
-        {
-          live && (
-            <a
-              href={live}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-accent hover:text-accent-700 font-medium text-sm"
-            >
-              Live Demo &rarr;
-            </a>
-          )
-        }
-      </div>
-
-      {
-        image && (
-          <div class="mt-8 rounded-xl overflow-hidden border border-text-200">
-            <img
-              src={image}
-              alt={`Screenshot of ${title}`}
-              class="w-full"
-              loading="lazy"
-            />
-          </div>
-        )
-      }
-
-      <div class="mt-10 prose max-w-none">
-        <Content />
-      </div>
-    </div>
-  </article>
-</BaseLayout>
+<CaseStudyLayout
+  href={`/projects/${project.slug}/`}
+  title={title}
+  description={description}
+  github={github}
+  caseStudy={caseStudy}
+>
+  <Content />
+</CaseStudyLayout>

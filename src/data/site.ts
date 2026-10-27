@@ -1,24 +1,19 @@
 export const siteConfig = {
   name: 'Toby McGuire',
-  title: 'Toby McGuire - Software Engineer',
+  title: 'Toby McGuire — Software Engineer · Simulation, Test Automation, Systems',
   description:
-    'Portfolio of Toby McGuire, a software engineer interested in AI, automation, and robotics systems.',
+    'Toby McGuire — software engineer at Boeing working in modeling & simulation and automated integration testing.',
   url: 'https://tobymcguire.net',
   github: 'https://github.com/tobymcguire0',
   itch: 'https://toblet.itch.io',
   email: 'tobymcguire461@gmail.com',
-  nav: [
-    { label: 'Home', href: '/' },
-    { label: 'Projects', href: '/projects' },
-    { label: 'Games', href: '/games' },
-    { label: 'Resume', href: '/resume' },
-    { label: 'About', href: '/about' },
-    { label: 'Now', href: '/now' },
-    { label: 'Contact', href: '/contact' },
-  ],
-  social: [
-    { label: 'GitHub', href: 'https://github.com/tobymcguire0', icon: 'github' },
-    { label: 'itch.io', href: 'https://toblet.itch.io', icon: 'itch' },
-    { label: 'Email', href: 'mailto:tobymcguire461@gmail.com', icon: 'email' },
-  ],
+  // Leave empty to point LinkedIn links at the contact section instead.
+  linkedin: 'https://www.linkedin.com/in/toby-mcguire/' as string,
+  resume: '/resume/Toby-McGuire-Resume.pdf',
+  photo: '/images/personal/profile.jpg',
 } as const;
+
+export const linkedinLink: { href: string; target?: string; rel?: string; title?: string } =
+  siteConfig.linkedin
+    ? { href: siteConfig.linkedin, target: '_blank', rel: 'noopener' }
+    : { href: '/#contact', title: 'LinkedIn URL not set yet' };

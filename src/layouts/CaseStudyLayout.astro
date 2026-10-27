@@ -1,0 +1,212 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import { caseNav, getCaseStudies } from '../lib/case-studies';
+
+type CaseStudy = NonNullable<CollectionEntry<'projects'>['data']['caseStudy']>;
+
+interface Props {
+  /** URL of this case study, e.g. /games/sumo. */
+  href: string;
+  title: string;
+  description: string;
+  github?: string;
+  caseStudy: CaseStudy;
+}
+
+const { href, title, description, github, caseStudy } = Astro.props;
+const { kicker, headline, lede, icon, iconAlt = '', meta, actions, figures, toc } = caseStudy;
+
+const cases = await getCaseStudies();
+const position = cases.findIndex((c) => c.href === href);
+// "Next" is the following case study and "Also" the one after, wrapping around.
+const others = [...cases.slice(position + 1), ...cases.slice(0, Math.max(position, 0))].slice(0, 2);
+---
+
+<BaseLayout
+  title={caseStudy.title}
+  description={caseStudy.description ?? description}
+  header={{
+    links: caseNav(cases),
+    current: href,
+    github: github ? { href: github, label: `${title} on GitHub` } : undefined,
+  }}
+>
+  <section class="case-hero">
+    <div class="wrap">
+      <div class="crumbs"><a href="/#projects">Projects</a><span>/</span><span>{title}</span></div>
+      {
+        icon ? (
+          <div class="case-mark">
+            <img src={icon} alt={iconAlt} />
+            <p class="label">{kicker}</p>
+          </div>
+        ) : (
+          <p class="label">{kicker}</p>
+        )
+      }
+      <h1 class="display">{headline}</h1>
+      <p class="lede" set:html={lede} />
+      <dl class="meta-grid">
+        {
+          meta.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd class:list={{ mono: item.mono }}>{item.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      {
+        actions.length > 0 && (
+          <div class="case-actions">
+            {actions.map((action) => (
+              <a class:list={['btn', { 'btn-primary': action.primary }]} href={action.href} target="_blank" rel="noopener">
+                {action.label}
+                <span class="sr-only"> (opens in a new tab)</span>
+              </a>
+            ))}
+          </div>
+        )
+      }
+      {
+        figures.length > 0 && (
+          <div class="figs">
+            {figures.map((fig) => (
+              <div>
+                <strong>{fig.value}</strong>
+                <span>{fig.caption}</span>
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="case-body">
+        <nav class="toc" aria-label="On this page">
+          {toc.map((item) => <a href={`#${item.id}`}>{item.label}</a>)}
+        </nav>
+        <article class="prose">
+          <slot />
+          {
+            others.length > 0 && (
+              <div class="next">
+                {others.map((c, i) => (
+                  <a href={c.href}>
+                    <b>{c.nextLabel}</b>
+                    <span class="go">{i === 0 ? 'Next' : 'Also'}</span>
+                  </a>
+                ))}
+              </div>
+            )
+          }
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  /* ---------- hero mark (projects with an app icon) ---------- */
+  .case-mark { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .case-mark img { width: 48px; height: 48px; border: 1px solid var(--fg); background: var(--surface); }
+  .case-mark .label { margin: 0; }
+
+  /* ---------- screenshots ---------- */
+  .shot { border: 1px solid var(--fg); }
+  .shot img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; image-rendering: pixelated; }
+
+  /* ---------- Sumo: collision lab ---------- */
+  .lab-views { display: grid; grid-template-columns: 1fr 1fr; }
+  .lab-view { padding: 12px 14px 14px; min-width: 0; }
+  .lab-view + .lab-view { border-left: 1px solid var(--fg); }
+  .lab-view canvas { width: 100%; height: auto; aspect-ratio: 4 / 3; display: block; background: var(--sunk); border: 1px solid var(--rule); }
+  .lab-view .cap { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 8px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; }
+  .lab-timeline { padding: 12px 14px; border-top: 1px solid var(--fg); }
+  .lab-timeline canvas { width: 100%; height: 84px; display: block; background: var(--sunk); border: 1px solid var(--rule); }
+  .lab-ctrls { display: grid; grid-template-columns: repeat(var(--stats, 1), 150px) minmax(0, 1fr) auto; border-top: 1px solid var(--fg); }
+  .lab-ctrls > * { padding: 12px 14px; min-width: 0; }
+  .lab-ctrls > * + * { border-left: 1px solid var(--rule); }
+  .lab-ctrls label, .lab-stat { display: grid; align-content: start; gap: 6px; font: 500 11px/1.4 var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .lab-ctrls output { color: var(--fg); font-size: 14px; font-variant-numeric: tabular-nums; }
+  .lab-ctrls input[type=range] { width: 100%; accent-color: var(--fg); height: 28px; margin: 0; }
+  .lab-play { display: flex; align-items: center; }
+
+  /* ---------- Computer vision: datapoint generator ---------- */
+  .dp-frame { position: relative; }
+  .dp-frame svg { position: absolute; inset: 1px; width: calc(100% - 2px); height: calc(100% - 2px); pointer-events: none; }
+  .dp-frame rect { fill: none; stroke: oklch(86% 0.16 145); stroke-width: 2; vector-effect: non-scaling-stroke; }
+
+  /* ---------- Saucer: layered system table ---------- */
+  .layers { margin: 28px 0; border-top: 1px solid var(--fg); }
+  .layer { display: grid; grid-template-columns: 130px minmax(0, 1fr) minmax(0, 1fr); gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+  .layer dt { font: 500 11px/1.7 var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .layer dd { margin: 0; }
+  .layer .what { font-weight: 500; }
+  .layer .why { color: var(--fg-2); font-size: 15px; }
+  .layer code, .prose code { font: 400 0.88em/1 var(--font-mono); }
+
+  /* ---------- Saucer: sync lab ---------- */
+  .devices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .device { padding: 14px; min-width: 0; }
+  .device + .device { border-left: 1px solid var(--fg); }
+  .device-head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; margin-bottom: 12px; font: 500 11px/1.4 var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
+  .conn { color: var(--muted); }
+  .conn::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; background: var(--rule); vertical-align: 0; }
+  .conn[data-on="true"] { color: oklch(36% 0.1 152); }
+  .conn[data-on="true"]::before { background: var(--ok); }
+  .rec { margin: 0; display: grid; grid-template-columns: 76px minmax(0, 1fr); border-top: 1px solid var(--rule); }
+  .rec dt, .rec dd { margin: 0; padding: 7px 0; border-bottom: 1px solid var(--rule); font: 400 13px/1.4 var(--font-mono); min-width: 0; overflow-wrap: anywhere; }
+  .rec dt { color: var(--muted); }
+  .rec .delta { margin-left: 8px; color: var(--muted); }
+  .lab-foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; border-top: 1px solid var(--fg); }
+  .lab-foot p { margin: 0; padding: 12px 14px; font-size: 15px; color: var(--fg-2); max-width: none; }
+  .stepper { display: flex; border-left: 1px solid var(--rule); }
+  .stepper button { min-width: 52px; min-height: 48px; border: 0; background: transparent; font: 500 13px/1 var(--font-mono); cursor: pointer; color: var(--fg); }
+  .stepper button + button { border-left: 1px solid var(--rule); }
+  .stepper button:hover:not(:disabled) { background: var(--sunk); }
+  .stepper button:disabled { color: var(--rule); cursor: default; }
+  .stepper button:focus-visible { outline-offset: -3px; }
+
+  /* ---------- Saucer: import flow ---------- */
+  .flow .tabs button:last-child { border-right: 0; }
+  .fallback { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 16px; padding: 12px 14px; border-top: 1px solid var(--rule); font-size: 14px; color: var(--fg-2); }
+  .fallback b { font: 500 11px/1.7 var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .flow-note { padding: 12px 14px; border-top: 1px solid var(--fg); font-size: 14px; color: var(--fg-2); margin: 0; max-width: none; }
+
+  /* ---------- Saucer: checks list ---------- */
+  .checks { list-style: none; padding: 0; margin: 20px 0; border-top: 1px solid var(--fg); max-width: none; }
+  .checks li { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 20px; padding: 12px 0; margin: 0; border-bottom: 1px solid var(--rule); font-size: 15px; }
+  .checks li > code { font-size: 13px; color: var(--fg); }
+
+  @media (max-width: 760px) {
+    .layer { grid-template-columns: 1fr; gap: 4px; }
+    .devices { grid-template-columns: 1fr; }
+    .device + .device { border-left: 0; border-top: 1px solid var(--fg); }
+    .lab-foot { grid-template-columns: 1fr; }
+    .stepper { border-left: 0; border-top: 1px solid var(--rule); }
+    .stepper button { flex: 1; }
+    .fallback, .checks li { grid-template-columns: 1fr; gap: 4px; }
+    .flow .tabs { flex-wrap: wrap; overflow: visible; }
+    .flow .tabs button { flex: 1 1 50%; border-bottom: 1px solid var(--rule); }
+    .flow .tabs button:nth-child(2n) { border-right: 0; }
+    .flow .tabs button:nth-last-child(-n+2) { border-bottom: 0; }
+  }
+  @media (max-width: 640px) {
+    .lab-views { grid-template-columns: 1fr; }
+    .lab-view + .lab-view { border-left: 0; border-top: 1px solid var(--fg); }
+    .lab-ctrls { grid-template-columns: 1fr; }
+    .lab-ctrls > * + * { border-left: 0; border-top: 1px solid var(--rule); }
+    .lab-play .btn { flex: 1; justify-content: center; }
+  }
+</style>
+
+<script>
+  import { initCaseStudyPage } from '../lib/case-demos';
+
+  initCaseStudyPage();
+</script>

@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { caseNav, getCaseStudies } from '../lib/case-studies';
+
+const cases = await getCaseStudies();
+---
+
+<BaseLayout
+  title="Page not found"
+  description="This page doesn't exist. Everything now lives on the home page and the case studies."
+  header={{ links: caseNav(cases) }}
+>
+  <section class="case-hero">
+    <div class="wrap">
+      <p class="label">Error 404</p>
+      <h1 class="display">This page doesn't exist.</h1>
+      <p class="lede">
+        It may have moved when the site was rebuilt. Everything now lives on the home page and the case studies.
+      </p>
+      <div class="case-actions">
+        <a class="btn btn-primary" href="/">Back to the portfolio →</a>
+        {cases.map((c) => <a class="btn" href={c.href}>{c.navLabel}</a>)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -3,8 +3,9 @@ title: World Traveller Shader
 description: Custom shader work exploring visual effects and rendering techniques for game environments.
 stack: [C#, Unity, ShaderLab]
 github: https://github.com/tobymcguire0/world_traveller_shader
-featured: true
-order: 3
+summary: Stylized rendering · ShaderLab, used in <i>Modulos</i>
+featured: false
+order: 5
 role: Solo developer
 ---
 

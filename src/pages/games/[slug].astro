@@ -1,97 +1,31 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { InferGetStaticPropsType } from 'astro';
 import { getCollection } from 'astro:content';
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 
 export async function getStaticPaths() {
-  const games = await getCollection('games');
+  // Entries without a case study are only listed on the homepage.
+  const games = await getCollection('games', ({ data }) => data.caseStudy !== undefined);
   return games.map((game) => ({
     params: { slug: game.slug },
     props: { game },
   }));
 }
 
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
 const { game } = Astro.props;
+const { title, pitch, github, caseStudy } = game.data;
+if (!caseStudy) throw new Error(`${game.id} has no caseStudy`);
 const { Content } = await game.render();
-const { title, pitch, genre, platform, itchUrl, github, image, tags } =
-  game.data;
 ---
 
-<BaseLayout title={title} description={pitch}>
-  <article class="bg-surface-900 min-h-screen text-white">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <a
-        href="/games"
-        class="text-sm text-accent-100 hover:text-white font-medium"
-      >
-        &larr; All Games
-      </a>
-
-      <h1 class="mt-4 text-4xl font-bold">{title}</h1>
-      <p class="mt-2 text-lg text-surface-100">{pitch}</p>
-
-      <div class="mt-4 flex items-center gap-3">
-        <span
-          class="text-sm font-medium px-3 py-1 rounded-full bg-accent-500/20 text-accent-100"
-          >{genre}</span
-        >
-        <span class="text-sm text-surface-200">{platform}</span>
-      </div>
-
-      {
-        tags.length > 0 && (
-          <div class="mt-4 flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <span class="text-xs px-2.5 py-1 rounded bg-surface-700 text-surface-100">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )
-      }
-
-      <div class="mt-6 flex items-center gap-4">
-        {
-          itchUrl && (
-            <a
-              href={itchUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center px-5 py-2.5 rounded-lg bg-accent text-white font-medium hover:bg-accent-700 transition-colors text-sm"
-            >
-              Play on itch.io &rarr;
-            </a>
-          )
-        }
-        {
-          github && (
-            <a
-              href={github}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-surface-200 hover:text-white font-medium text-sm transition-colors"
-            >
-              View Source &rarr;
-            </a>
-          )
-        }
-      </div>
-
-      {
-        image && (
-          <div class="mt-8 rounded-xl overflow-hidden">
-            <img
-              src={image}
-              alt={`Screenshot of ${title}`}
-              class="w-full"
-              loading="lazy"
-            />
-          </div>
-        )
-      }
-
-      <div class="mt-10 prose prose-invert max-w-none">
-        <Content />
-      </div>
-    </div>
-  </article>
-</BaseLayout>
+<CaseStudyLayout
+  href={`/games/${game.slug}/`}
+  title={title}
+  description={pitch}
+  github={github}
+  caseStudy={caseStudy}
+>
+  <Content />
+</CaseStudyLayout>

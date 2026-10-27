@@ -6,8 +6,8 @@ platform: Desktop
 itchUrl: https://toblet.itch.io/we-lost-the-game
 image: /images/games/WeLostTheGame/WLTG-main.png
 tags: [Platformer, Unity, Game Jam]
-featured: true
-order: 5
+featured: false
+order: 3
 ---
 
 A meta-platformer where the game itself is broken and players must gather pieces of functionality to rebuild it. A creative twist on the platformer genre that plays with the expectations of what a game should be.
