@@ -1,41 +1,28 @@
 ---
 import { siteConfig } from '../../data/site';
+
+export interface Props {
+  variant?: 'home' | 'case';
+}
+
+const { variant = 'case' } = Astro.props;
+const host = new URL(siteConfig.url).host;
 ---
 
-<footer class="bg-surface-900 text-surface-200 mt-auto">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div
-      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6"
-    >
-      <div>
-        <p class="text-background-50 font-semibold">{siteConfig.name}</p>
-        <p class="text-sm mt-1">Software Engineer - AI, Autonomy & Robotics</p>
-      </div>
-      <div class="flex items-center gap-4">
-        {
-          siteConfig.social.map((link) => (
-            <a
-              href={link.href}
-              target={link.href.startsWith('mailto') ? undefined : '_blank'}
-              rel={
-                link.href.startsWith('mailto')
-                  ? undefined
-                  : 'noopener noreferrer'
-              }
-              class="text-surface-200 hover:text-white transition-colors text-sm"
-              aria-label={link.label}
-            >
-              {link.label}
-            </a>
-          ))
-        }
-      </div>
-    </div>
-    <div class="mt-8 pt-6 border-t border-surface-700 text-sm text-surface-300">
-      <p>
-        &copy; {new Date().getFullYear()}
-        {siteConfig.name}. All rights reserved.
-      </p>
-    </div>
+<footer class="foot">
+  <div class="wrap">
+    {
+      variant === 'home' ? (
+        <>
+          <span class="small">&copy; {new Date().getFullYear()} {siteConfig.name} · {host}</span>
+          <span class="cap mono">Hand-written HTML &amp; CSS</span>
+        </>
+      ) : (
+        <>
+          <a class="small" href="/">&larr; Back to portfolio</a>
+          <span class="small">{siteConfig.email}</span>
+        </>
+      )
+    }
   </div>
 </footer>

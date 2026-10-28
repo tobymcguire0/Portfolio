@@ -1,156 +1,371 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/shared/SectionHeading.astro';
 import ProjectCard from '../components/shared/ProjectCard.astro';
 import GameCard from '../components/shared/GameCard.astro';
 import { homeContent } from '../data/home';
-import { siteConfig } from '../data/site';
-import { getCollection } from 'astro:content';
+import { siteConfig, linkedinLink } from '../data/site';
 
-const allProjects = await getCollection('projects');
-const featuredProjects = allProjects
-  .filter((p) => p.data.featured)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
+const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) =>
+  a.data.order - b.data.order;
+const projects = (await getCollection('projects')).sort(byOrder);
+const games = (await getCollection('games')).sort(byOrder);
 
-const allGames = await getCollection('games');
-const featuredGames = allGames
-  .filter((g) => g.data.featured)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
+// Featured entries get a full row (and a case study); the rest collapse into one-line rows.
+const featured = [
+  ...projects.filter((p) => p.data.featured).map((entry) => ({ kind: 'project' as const, entry })),
+  ...games.filter((g) => g.data.featured).map((entry) => ({ kind: 'game' as const, entry })),
+].sort((a, b) => a.entry.data.order - b.entry.data.order);
 
-const { hero, sections, photos } = homeContent;
+const repoRows = projects.flatMap(({ data }) =>
+  !data.featured && data.summary && data.github
+    ? [{ title: data.title, summary: data.summary, href: data.github }]
+    : [],
+);
+const shippedGames = games.filter((g) => !g.data.featured && g.data.itchUrl).map((g) => g.data.title);
+
+const { hero, spec, work, tools, about, contact } = homeContent;
+const githubLabel = siteConfig.github.replace(/^https?:\/\//, '');
+const resumeFile = siteConfig.resume.split('/').pop();
 ---
 
-<BaseLayout title={siteConfig.title} description={siteConfig.description}>
-  <section class="bg-surface-800 text-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
-      <p class="text-accent-100 font-medium text-sm tracking-wide uppercase">
-        <img
-          src={photos.icon}
-          alt="Toby McGuire profile photo"
-          class="inline-block w-32 h-32 mr-2 rounded-full object-cover"
+<BaseLayout
+  title={siteConfig.title}
+  description={siteConfig.description}
+  header={{ showLinkedIn: true }}
+  footer="home"
+>
+  <section class="hero">
+    <div class="wrap">
+      <div class="sec-grid">
+        <div class="hero-id">
+          <img src={siteConfig.photo} alt={siteConfig.name} />
+          <div><b>{siteConfig.name}</b><span class="small">{hero.role}</span></div>
+        </div>
+        <div>
+          <h1 class="display">{hero.headline}</h1>
+          <p class="lede">{hero.lede}</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href={siteConfig.resume} download
+              ><svg><use href="#i-dl"></use></svg>{hero.resumeCta}</a
+            >
+            <button class="btn js-copy" type="button" data-email={siteConfig.email}><span>Copy email</span></button>
+          </div>
+        </div>
+      </div>
+
+      <dl class="spec" aria-label="At a glance">
+        {
+          spec.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd class:list={{ mono: item.mono }}>{item.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <div class="jump" style="margin-top:clamp(40px,6vw,72px)">
+    <div class="wrap">
+      <nav aria-label="Jump to section">
+        <a href="#work">Work</a><a href="#projects">Projects</a><a href="#tools">Tools</a><a href="#about">About</a>
+      </nav>
+    </div>
+  </div>
+
+  <section id="work" class="sec">
+    <div class="wrap">
+      <div>
+        <SectionHeading
+          heading={work.heading}
+          link={{ label: work.linkLabel, href: siteConfig.resume, download: true }}
         />
-        {hero.greeting}
-      </p>
-      <h1
-        class="mt-3 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight"
-      >
-        {hero.tagline}
-      </h1>
-      <h2 class="mt-0 text-base sm:text-lg lg:text-xl font-semibold tracking-tight text-accent-200">
-        {hero.subline}
-      </h2>
-      <p
-        class="mt-6 text-lg sm:text-xl text-surface-100 max-w-2xl leading-relaxed"
-      >
-        {hero.intro}
-      </p>
-      <div class="mt-8 flex flex-wrap gap-4">
-        <a
-          href={hero.primaryCta.href}
-          class="inline-flex items-center px-6 py-3 rounded-lg bg-accent text-white font-medium hover:bg-accent-700 transition-colors active:ring-2 active:ring-accent-200 hover:ring-2 hover:ring-accent-800"
-        >
-          {hero.primaryCta.label}
-        </a>
-        <a
-          href={hero.secondaryCta.href}
-          class="inline-flex items-center px-6 py-3 rounded-lg border border-surface-200 text-background-50 font-medium hover:bg-surface-700 hover:border-surface-100 transition-colors"
-        >
-          {hero.secondaryCta.label}
-        </a>
+        <div class="rows">
+          {
+            work.jobs.map((job) => (
+              <article class="job">
+                <div class="job-when">
+                  <b>{job.company}</b>
+                  {job.when}
+                  <br />
+                  {job.location}
+                </div>
+                <div>
+                  <h3 class="h3">{job.title}</h3>
+                  <ul class="duties">{job.duties.map((duty) => <li>{duty}</li>)}</ul>
+                  <ul class="stackline">{job.stack.map((item) => <li>{item}</li>)}</ul>
+                </div>
+                <div class="job-figs">
+                  {job.figures.map((fig) => (
+                    <div>
+                      <strong>{fig.value}</strong>
+                      <span>{fig.caption}</span>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ))
+          }
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="py-20">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <SectionHeading
-        heading={sections.projects.heading}
-        subheading={sections.projects.subheading}
-      />
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {
-          featuredProjects.map((project) => (
-            <ProjectCard
-              title={project.data.title}
-              description={project.data.description}
-              stack={project.data.stack}
-              github={project.data.github}
-              live={project.data.live}
-              slug={project.slug}
-              image={project.data.image}
-              role={project.data.role}
-            />
-          ))
-        }
-      </div>
-      <div class="mt-8 text-center">
-        <a
-          href="/projects"
-          class="text-accent hover:text-accent-700 font-medium text-sm"
-        >
-          View all projects &rarr;
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-20 bg-surface-900">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <SectionHeading
-        heading={sections.games.heading}
-        subheading={sections.games.subheading}
-        dark
-      />
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {
-          featuredGames.map((game) => (
-            <GameCard
-              title={game.data.title}
-              pitch={game.data.pitch}
-              genre={game.data.genre}
-              platform={game.data.platform}
-              itchUrl={game.data.itchUrl}
-              github={game.data.github}
-              slug={game.slug}
-              image={game.data.image}
-              tags={game.data.tags}
-            />
-          ))
-        }
-      </div>
-      <div class="mt-8 text-center">
-        <a
-          href="/games"
-          class="text-accent-100 hover:text-white font-medium text-sm"
-        >
-          View all games &rarr;
-        </a>
+  <section id="projects" class="sec">
+    <div class="wrap">
+      <div>
+        <SectionHeading
+          heading={homeContent.projects.heading}
+          link={{ label: githubLabel, href: siteConfig.github, external: true }}
+        />
+        <div class="rows">
+          {
+            featured.map((item) =>
+              item.kind === 'project' ? (
+                <ProjectCard
+                  href={`/projects/${item.entry.slug}/`}
+                  title={item.entry.data.title}
+                  description={item.entry.data.description}
+                  stack={item.entry.data.stack}
+                  image={item.entry.data.image}
+                  imageAlt={item.entry.data.imageAlt}
+                />
+              ) : (
+                <GameCard
+                  slug={item.entry.slug}
+                  title={item.entry.data.title}
+                  pitch={item.entry.data.pitch}
+                  tags={item.entry.data.tags}
+                  image={item.entry.data.image}
+                  imageAlt={item.entry.data.imageAlt}
+                />
+              ),
+            )
+          }
+          {
+            repoRows.map((row) => (
+              <a class="minor" href={row.href} target="_blank" rel="noopener">
+                <b>{row.title}</b>
+                <span class="small" set:html={row.summary} />
+                <span class="go">Repo</span>
+                <span class="sr-only"> (opens in a new tab)</span>
+              </a>
+            ))
+          }
+          {
+            shippedGames.length > 0 && (
+              <a class="minor" href={siteConfig.itch} target="_blank" rel="noopener">
+                <b>{homeContent.projects.gamesRow.title}</b>
+                <span class="small">{shippedGames.join(', ')} · itch.io</span>
+                <span class="go">{homeContent.projects.gamesRow.go}</span>
+                <span class="sr-only"> (opens in a new tab)</span>
+              </a>
+            )
+          }
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl font-bold text-text">Let's Connect</h2>
-      <p class="mt-3 text-lg text-text-600">
-        Interested in working together or want to learn more?
-      </p>
-      <div class="mt-8 flex flex-wrap justify-center gap-4">
-        <a
-          href="/resume"
-          class="inline-flex items-center px-6 py-3 rounded-lg bg-accent text-white font-medium hover:bg-accent-700 transition-colors active:ring-2 active:ring-accent-200 hover:ring-2 hover:ring-accent-800"
-        >
-          View Resume
-        </a>
-        <a
-          href="/contact"
-          class="inline-flex items-center px-6 py-3 rounded-lg border border-text-300 text-text-800 font-medium bg-background-100 hover:bg-background-200 transition-colors"
-        >
-          Get in Touch
-        </a>
+  <section id="tools" class="sec">
+    <div class="wrap">
+      <div>
+        <SectionHeading heading={tools.heading} />
+        <div class="rows">
+          {
+            tools.rows.map((row) => (
+              <div class="stack-row">
+                <span class="label">{row.label}</span>
+                <ul class="stackline">{row.items.map((item) => <li>{item}</li>)}</ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="sec">
+    <div class="wrap">
+      <div class="about">
+        <div>
+          <div class="about-photo"><img src={about.photo} alt={about.photoAlt} loading="lazy" /></div>
+          <p class="cap mono">{about.caption}</p>
+        </div>
+        <div>
+          <h2 class="h2">{about.heading}</h2>
+          <p class="lede">{about.lede}</p>
+          <p class="small" style="margin-top:16px">{about.aside}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="sec contact">
+    <div class="wrap">
+      <div>
+        <h2 class="display" style="font-size:clamp(36px,5.4vw,64px)">{contact.heading}</h2>
+        <p class="lede">{contact.lede}</p>
+        <div class="contact-list">
+          <button class="contact-row primary js-copy" type="button" data-email={siteConfig.email}>
+            <span class="k">Email</span><span class="v">{siteConfig.email}</span><span class="go js-copy-label">Copy</span>
+          </button>
+          <a class="contact-row" href={siteConfig.resume} download>
+            <span class="k">Resume</span><span class="v">{resumeFile}</span><span class="go">Download</span>
+          </a>
+          <a class="contact-row" {...linkedinLink}>
+            <span class="k">LinkedIn</span><span class="v">LinkedIn profile</span><span class="go">Open</span>
+          </a>
+          <a class="contact-row" href={siteConfig.github} target="_blank" rel="noopener">
+            <span class="k">GitHub</span><span class="v">{githubLabel}</span><span class="go">Open</span>
+            <span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<style is:global>
+  /* ---------- hero ---------- */
+  .hero { padding: clamp(40px, 6vw, 80px) 0 0; }
+  .hero-id { display: grid; gap: 12px; align-content: start; }
+  .hero-id img { width: 100%; max-width: 160px; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--fg); }
+  .hero-id b { display: block; font-weight: 600; letter-spacing: -0.01em; }
+  .hero .status { margin-bottom: 24px; }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; align-items: center; }
+  .copied { color: oklch(36% 0.1 152) !important; }
+
+  .spec { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: clamp(40px, 6vw, 72px) 0 0; border-top: 1px solid var(--fg); }
+  .spec > div { padding: 14px 16px 18px 0; min-width: 0; }
+  .spec > div + div { padding-left: 16px; border-left: 1px solid var(--rule); }
+  .spec dt { font: 500 11px/1.4 var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+  .spec dd { margin: 0; font-size: 14px; font-weight: 500; line-height: 1.4; }
+
+  /* ---------- section jump bar ---------- */
+  .jump { position: sticky; top: 56px; z-index: 10; background: color-mix(in oklch, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--fg); }
+  .jump nav { display: flex; }
+  .jump a { flex: 0 0 auto; display: flex; align-items: center; min-height: 44px; padding: 0 20px; text-decoration: none; border-right: 1px solid var(--rule); font: 500 12px/1 var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  /* Sticky nav (56px) + jump bar (45px) + 12px gap, minus the section's own top padding, so the section title lands just below the bars. */
+  .sec[id] { scroll-margin-top: calc(56px + 45px + 12px - clamp(28px, 4vw, 40px)); }
+  .jump a:first-child { border-left: 1px solid var(--rule); }
+  .jump a:hover { color: var(--fg); background: var(--sunk); }
+  .jump a[aria-current="true"] { color: var(--fg); box-shadow: inset 0 -2px 0 var(--fg); }
+
+  /* ---------- experience ---------- */
+  .job { display: grid; grid-template-columns: 170px minmax(0, 1fr) 200px; gap: 32px; padding: 28px 0; }
+  .job-when { font: 500 13px/1.5 var(--font-mono); color: var(--muted); }
+  .job-when b { display: block; color: var(--fg); font: 600 17px/1.3 var(--font-display); letter-spacing: -0.01em; margin-bottom: 4px; }
+  .job ul.duties { margin: 12px 0 16px; padding-left: 18px; color: var(--fg-2); }
+  .job ul.duties li { margin: 6px 0; max-width: 62ch; }
+  .job ul.duties li::marker { content: "— "; color: var(--muted); }
+  .job-figs { display: grid; align-content: start; border-left: 1px solid var(--rule); padding-left: 20px; }
+  .job-figs div + div { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  .job-figs strong { display: block; font: 600 28px/1 var(--font-mono); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .job-figs span { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+  /* ---------- project index ---------- */
+  .proj { display: grid; grid-template-columns: 240px minmax(0, 1fr) 240px; gap: 28px; padding: 24px 0; text-decoration: none; align-items: start; transition: background .15s ease; }
+  .proj:hover { background: var(--sunk); }
+  .proj-art { aspect-ratio: 16 / 10; border: 1px solid var(--fg); background: var(--sunk); position: relative; overflow: hidden; }
+  .proj-art img { width: 100%; height: 100%; object-fit: cover; }
+  .proj-art svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .proj-main p { margin: 8px 0 0; color: var(--fg-2); font-size: 15px; }
+  .proj-side { display: grid; gap: 14px; align-content: start; }
+  .proj-side .stackline { justify-content: flex-end; }
+  .proj-side .go { justify-self: end; }
+  /* Tags never split mid-name; trailing separators keep a wrapped line from starting with a dangling "/". */
+  .proj-side .stackline li { white-space: nowrap; }
+  .proj-side .stackline li + li::before { content: none; }
+  .proj-side .stackline li:not(:last-child)::after { content: "/"; margin: 0 8px; color: var(--rule); }
+  .go { font: 500 12px/1 var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; display: inline-flex; gap: 8px; align-items: center; }
+  .go::after { content: "→"; transition: transform .15s ease; }
+  .proj:hover .go::after, .minor:hover .go::after { transform: translateX(4px); }
+
+  .minor { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto; gap: 28px; padding: 14px 0; text-decoration: none; align-items: baseline; }
+  .minor:hover { background: var(--sunk); }
+  .minor b { font-weight: 600; font-size: 15px; }
+  .minor .go::after { content: "↗"; }
+
+  /* ---------- stack table ---------- */
+  .stack-row { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 32px; padding: 14px 0; align-items: baseline; }
+  .stack-row .stackline { color: var(--fg); font-size: 14px; }
+
+  /* ---------- about ---------- */
+  .about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(28px, 4vw, 48px); align-items: start; }
+  .about-photo { border: 1px solid var(--fg); aspect-ratio: 3 / 2; overflow: hidden; }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .about-photo + .cap { margin-top: 8px; }
+
+  /* ---------- contact band ---------- */
+  .contact { background: var(--fg); color: var(--surface); border-top: 0; }
+  .contact .label { color: oklch(70% 0.012 250); }
+  .contact p { color: oklch(82% 0.01 250); }
+  .contact-list { margin-top: 36px; border-top: 1px solid oklch(100% 0 0 / .35); }
+  .contact-row { display: grid; grid-template-columns: 140px minmax(0, 1fr) auto; gap: 24px; align-items: center; min-height: 60px; padding: 8px 0; border-bottom: 1px solid oklch(100% 0 0 / .14); text-decoration: none; color: inherit; width: 100%; background: none; border-left: 0; border-right: 0; border-top: 0; font: inherit; text-align: left; cursor: pointer; }
+  .contact-row:hover { background: oklch(24% 0.014 250); }
+  .contact-row dt, .contact-row .k { font: 500 12px/1 var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: oklch(70% 0.012 250); }
+  .contact-row .v { font-size: clamp(16px, 2vw, 22px); font-weight: 500; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+  .contact-row .go { color: oklch(82% 0.01 250); }
+  .contact-row.primary .v { font-size: clamp(18px, 2.6vw, 28px); }
+  .contact + .foot { border-top: 0; }
+
+  @media (max-width: 1080px) {
+    .job { grid-template-columns: 150px minmax(0, 1fr); }
+    .job-figs { grid-column: 2; grid-template-columns: 1fr 1fr; border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 16px; gap: 0 20px; }
+    .job-figs div + div { margin-top: 0; padding-top: 0; border-top: 0; border-left: 1px solid var(--rule); padding-left: 20px; }
+    .proj { grid-template-columns: 180px minmax(0, 1fr); }
+    .proj-side { grid-column: 2; }
+  }
+  @media (max-width: 760px) {
+    .jump a { flex: 1 1 0; justify-content: center; padding: 0 8px; }
+    .spec { grid-template-columns: 1fr 1fr; }
+    .spec > div:nth-child(n) { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); }
+    .spec > div:nth-child(even) { border-left: 1px solid var(--rule); padding-left: 16px; }
+    .spec > div:nth-child(-n+2) { border-top: 0; }
+    .hero-id { grid-template-columns: 72px 1fr; align-items: center; margin-bottom: 24px; }
+    .job { grid-template-columns: 1fr; gap: 12px; }
+    .job-figs { grid-column: 1; }
+    .proj { grid-template-columns: 1fr; gap: 14px; }
+    .proj-side { grid-column: 1; }
+    .minor { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; }
+    .minor .small { grid-column: 1; grid-row: 2; }
+    .minor .go { grid-row: 1 / span 2; align-self: center; }
+    .stack-row { grid-template-columns: 1fr; gap: 6px; }
+    .about { grid-template-columns: 1fr; }
+    .contact-row { grid-template-columns: 1fr auto; gap: 4px 16px; padding: 12px 0; }
+    .contact-row .k { grid-column: 1; }
+    .contact-row .v { grid-column: 1; }
+    .contact-row .go { grid-column: 2; grid-row: 1 / span 2; }
+  }
+</style>
+
+<script>
+  import { scrollSpy } from '../lib/scrollspy';
+
+  document.querySelectorAll<HTMLButtonElement>('.js-copy').forEach((btn) => {
+    const label = btn.querySelector('.js-copy-label') ?? btn.querySelector('span');
+    if (!label) return;
+    const original = label.textContent;
+    const email = btn.dataset.email ?? '';
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(email);
+        label.textContent = 'Copied';
+        btn.classList.add('copied');
+      } catch {
+        location.href = `mailto:${email}`;
+        return;
+      }
+      setTimeout(() => {
+        label.textContent = original;
+        btn.classList.remove('copied');
+      }, 1800);
+    });
+  });
+
+  scrollSpy([...document.querySelectorAll<HTMLAnchorElement>('.jump a')], '-45% 0px -50% 0px');
+</script>

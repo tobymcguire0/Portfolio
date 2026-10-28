@@ -6,7 +6,7 @@ platform: Web (Play in browser)
 itchUrl: https://toblet.itch.io/transmission
 image: /images/games/Transmission/transmission-main.png
 tags: [Puzzle, Browser]
-featured: true
+featured: false
 order: 2
 ---
 
